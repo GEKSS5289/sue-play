@@ -170,14 +170,14 @@
     ⛑注：文档删除不是立即删除，文档还是保存在磁盘上，索引增长越来越多，才会把那些曾经标识过删除的，进行清理，从磁盘上移出去。
     修改文档
 ##  ✏文档基本操作-修改文档
-   ###局部
+   ### 局部
         POST /my_doc/_doc/1/_update
         {
             "doc": {
                 "name": "慕课"
             }
         }
-   ###全量替换
+   ### 全量替换
         PUT /my_doc/_doc/1
         {
              "id": 1001,
@@ -285,4 +285,217 @@
         }
 ## 🔨建立ik中文分词器
    ### 🚬下载ik中文分词器
-   ####📞官方提供:[]
+   #### 📞官方提供:[ik-7.2.4中文分词器](https://github.com/medcl/elasticsearch-analysis-ik)
+   #### 🤝作者提供:[ik-7.2.4中文分词器](https://shushun.oss-cn-shenzhen.aliyuncs.com/software/elasticsearch-analysis-ik-7.4.2.zip)
+   ### 📦解压
+         unzip elasticsearch-analysis-ik-7.4.2.zip -d /usr/local/elasticsearch-7.4.2/plugins/ik/
+   ### ⚗测试
+        POST /_analyze
+        {
+            "analyzer": "ik_max_word",
+            "text": "上下班车流量很大"
+        }
+## 🗄自定义中文词库
+   ### 📄在/usr/local/elasticsearch-7.4.2/plugins/ik/config/ 创建custom.dic
+        vim custom.dic
+   ### 📄在custom.dic添加内容
+        sue
+        df
+   ### 📄配置自定义扩展词典
+        cd elasticsearch-analysis-ik-7.4.2.zip -d /usr/local/elasticsearch-7.4.2/plugins/ik/config
+        vim IKAnalyzer.cfg.xml
+            <entry key="ext_dict">custom.dic</entry>
+   ### 👌重启
+## 🔍DSL搜索-数据准备
+   ### 💾数据准备
+   #### 😊自定义词库
+        慕课网
+        慕课
+        课网
+        慕
+        课
+        网
+   #### 🔑建立索引shop(名字随意)
+   ##### 🤚手动建立mappings
+        POST        /shop/_mapping
+        {
+            "properties": {
+                "id": {
+                    "type": "long"
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "keyword"
+                },
+                "nickname": {
+                    "type": "text",
+                    "analyzer": "ik_max_word"
+                },
+                "money": {
+                    "type": "float"
+                },
+                "desc": {
+                    "type": "text",
+                    "analyzer": "ik_max_word"
+                },
+                "sex": {
+                    "type": "byte"
+                },
+                "birthday": {
+                    "type": "date"
+                },
+                "face": {
+                    "type": "text",
+                    "index": false
+                }
+            }
+        }
+   
+   ##### 📼录入数据
+        POST         /shop/_doc/1001
+        
+        {
+            "id": 1001,
+            "age": 18,
+            "username": "imoocAmazing",
+            "nickname": "慕课网",
+            "money": 88.8,
+            "desc": "我在慕课网学习java和前端，学习到了很多知识",
+            "sex": 0,
+            "birthday": "1992-12-24",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1002,
+            "age": 19,
+            "username": "justbuy",
+            "nickname": "周杰棍",
+            "money": 77.8,
+            "desc": "今天上下班都很堵，车流量很大",
+            "sex": 1,
+            "birthday": "1993-01-24",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1003,
+            "age": 20,
+            "username": "bigFace",
+            "nickname": "飞翔的巨鹰",
+            "money": 66.8,
+            "desc": "慕课网团队和导游坐飞机去海外旅游，去了新马泰和欧洲",
+            "sex": 1,
+            "birthday": "1996-01-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1004,
+            "age": 22,
+            "username": "flyfish",
+            "nickname": "水中鱼",
+            "money": 55.8,
+            "desc": "昨天在学校的池塘里，看到有很多鱼在游泳，然后就去慕课网上课了",
+            "sex": 0,
+            "birthday": "1988-02-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1005,
+            "age": 25,
+            "username": "gotoplay",
+            "nickname": "ps游戏机",
+            "money": 155.8,
+            "desc": "今年生日，女友送了我一台play station游戏机，非常好玩，非常不错",
+            "sex": 1,
+            "birthday": "1989-03-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1006,
+            "age": 19,
+            "username": "missimooc",
+            "nickname": "我叫小慕",
+            "money": 156.8,
+            "desc": "我叫凌云慕，今年20岁，是一名律师，我在琦䯲星球做演讲",
+            "sex": 1,
+            "birthday": "1993-04-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1007,
+            "age": 19,
+            "username": "msgame",
+            "nickname": "gamexbox",
+            "money": 1056.8,
+            "desc": "明天去进货，最近微软处理很多游戏机，还要买xbox游戏卡带",
+            "sex": 1,
+            "birthday": "1985-05-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1008,
+            "age": 19,
+            "username": "muke",
+            "nickname": "慕学习",
+            "money": 1056.8,
+            "desc": "大学毕业后，可以到imooc.com进修",
+            "sex": 1,
+            "birthday": "1995-06-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1009,
+            "age": 22,
+            "username": "shaonian",
+            "nickname": "骚年轮",
+            "money": 96.8,
+            "desc": "骚年在大学毕业后，考研究生去了",
+            "sex": 1,
+            "birthday": "1998-07-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1010,
+            "age": 30,
+            "username": "tata",
+            "nickname": "隔壁老王",
+            "money": 100.8,
+            "desc": "隔壁老外去国外出差，带给我很多好吃的",
+            "sex": 1,
+            "birthday": "1988-07-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1011,
+            "age": 31,
+            "username": "sprder",
+            "nickname": "皮特帕克",
+            "money": 180.8,
+            "desc": "它是一个超级英雄",
+            "sex": 1,
+            "birthday": "1989-08-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
+        
+        {
+            "id": 1012,
+            "age": 31,
+            "username": "super hero",
+            "nickname": "super hero",
+            "money": 188.8,
+            "desc": "BatMan, GreenArrow, SpiderMan, IronMan... are all Super Hero",
+            "sex": 1,
+            "birthday": "1980-08-14",
+            "face": "https://www.imooc.com/static/img/index/logo.png"
+        }
