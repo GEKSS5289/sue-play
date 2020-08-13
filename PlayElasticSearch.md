@@ -1158,7 +1158,7 @@
     {"delete": {"_id": "2003"}}
     {"delete": {"_id": "2005"}}
     官文：https://www.elastic.co/guide/cn/elasticsearch/guide/current/bulk.html
-## ElastSearch 6.4.3 👨‍❤️‍💋‍👨 SpringBoot 2.2.2
+## 整合ElastSearch 6.4.3 👨‍❤️‍💋‍👨 SpringBoot 2.2.2
 > 🙃勿谓言之不预:SpringBoot2.2.2支持的ElasticSearch的版本为6.4.3
 ### 🧊创建SpringBoot工程，引入依赖
     <dependency>
