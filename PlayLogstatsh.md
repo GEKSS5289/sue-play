@@ -1,4 +1,4 @@
-# 🤝🏻logstatsh同步数据库数据到ElasticSearch中
+# 🤝🏻logstatsh同步数据库数据到ElasticSearch中（logstatsh 与 ES版本需一样）
 ### 📄同步简介
    - 💿安装logstatsh
    - 🍪在logstatsh目录里创建sync文件夹
