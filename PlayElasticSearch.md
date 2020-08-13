@@ -1160,7 +1160,7 @@
     官文：https://www.elastic.co/guide/cn/elasticsearch/guide/current/bulk.html
 ## ElastSearch 6.4.3 👨‍❤️‍💋‍👨 SpringBoot 2.2.2
 > 🙃勿谓言之不预:SpringBoot2.2.2支持的ElasticSearch的版本为6.4.3
-### `🧊`创建SpringBoot工程，引入依赖
+### 🧊创建SpringBoot工程，引入依赖
     <dependency>
     	<groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
@@ -1173,13 +1173,13 @@
     	<artifactId>spring-boot-starter-test</artifactId>
     	<scope>test</scope>
     </dependency>
-### `🩹`配置application.yml
+### 🩹配置application.yml
     spring:
       data:
         elasticsearch:
           cluster-name: es6
           cluster-nodes: 192.168.1.187:9300
-### `🧊`Netty issue fix (解决启动报错)
+### 🧊Netty issue fix (解决启动报错)
      创建ESConfig配置类
      @Configuration
      public class ESConfig {
