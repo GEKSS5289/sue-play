@@ -6,6 +6,7 @@
 > ##### ⚙配置properties Or yml文件(consumer)
 > ##### 🧱producer端代码示例
 > ##### 💳consumer端代码示例
+> ##### 💪MQ可靠性
 > ##### 🛀MQproducer关注的可靠性问题
 > ##### 🛀MQconsumer关注的可靠性问题
 # ✨SpringBoot2.x整合RabbitMq3.6.5
@@ -135,6 +136,10 @@
             channel.basicAck(deliverTag,false);
         }
     }
+### 💪MQ可靠性
+  > #### 生产者：生产者写消息存在丢失或者MQ接受存在问题
+  > #### MQ : MQ接受到数据先暂存在内存中，消费者还没有消费，MQ挂掉，缓存丢失。
+  > #### 消费者：消费拉取到消息还没处理直接挂掉，但MQ以为对方收到消息。
 ### 🛀MQproducer关注的可靠性问题
   > #### 关注的可靠性问题:消息可靠性投递问题(生产者保证消息可靠投递)
 
