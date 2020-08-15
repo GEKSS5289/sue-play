@@ -6,6 +6,8 @@
 > ##### ⚙配置properties Or yml文件(consumer)
 > ##### 🧱producer端代码示例
 > ##### 💳consumer端代码示例
+> ##### 🛀MQproducer关注的可靠性问题
+> ##### 🛀MQconsumer关注的可靠性问题
 # ✨SpringBoot2.x整合RabbitMq3.6.5
  
 ### 🌠引入依赖(producer,consumer都需要引入)
@@ -133,3 +135,8 @@
             channel.basicAck(deliverTag,false);
         }
     }
+### 🛀MQproducer关注的可靠性问题
+  > #### 关注的可靠性问题:消息可靠性投递问题
+
+### 🛀MQConsumer关注的可靠性问题
+  > #### 关注的可靠性问题:消费消息幂等性  
