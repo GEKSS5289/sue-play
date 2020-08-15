@@ -45,7 +45,7 @@
             elasticsearch {
                 # es地址
                 hosts => ["127.0.0.1:9200"]
-                # 同步的索引名
+                # 同步的索引名(需要预先创建索引)
                 index => "foodie-items"
                 # 设置_docID和数据相同
                 #document_id => "%{id}"
