@@ -62,7 +62,7 @@
             producer.close();
         }
     }
-#### 🌽创建消费者者
+# 🌽创建消费者者
     public class QuickStartConsumer {
         public static void main(String[] args){
             //配置属性参数
