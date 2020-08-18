@@ -130,7 +130,7 @@
 > ### 👒Consumer端整合  
 > ### 🔬发送消息测试      
 ## ⛑Prodcuer端整合
- ###引入依赖:
+ ### 引入依赖:
           <dependency>
                     <groupId>org.springframework.kafka</groupId>
                     <artifactId>spring-kafka</artifactId>
