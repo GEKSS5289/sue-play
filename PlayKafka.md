@@ -130,14 +130,13 @@
 > ### 👒Consumer端整合  
 > ### 🔬发送消息测试      
 ## ⛑Prodcuer端整合
-    引入依赖:
+ ###引入依赖:
           <dependency>
                     <groupId>org.springframework.kafka</groupId>
                     <artifactId>spring-kafka</artifactId>
           </dependency>
-    配置文件:
+ ### 配置文件:
           server.port=8001
-          
           ##springBoot整合kafka
           spring.kafka.bootstrap-servers=192.168.182.150:9092
           ##kafka producer发送消息失败时的一个重试次数
@@ -153,13 +152,37 @@
           ##acks=-1 表示分区leader必须等待消息被成功写入所有的ISR副本（同步副本）中才认为producer请求成功，这种方案提供做高消息持久性保证，但是理论上吞吐量是最差的
           ##实际工作中的配置
           spring.kafka.producer.acks=1 
+  ### ProducerService
+          @Component
+          @Slf4j
+          public class KafkaproducerService {
+              @Resource
+              private KafkaTemplate<String,Object> kafkaTemplate;
+          
+              public void sendMessage(String topic,Object object){
+          
+                  ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, object);
+                  future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
+          
+                      public void onFailure(Throwable throwable) {
+                          log.error("发送消息失败:"+throwable.getMessage());
+                      }
+          
+                      public void onSuccess(SendResult<String, Object> stringObjectSendResult) {
+                          log.info("发送消息成功:"+stringObjectSendResult.toString());
+                      }
+                  });
+          
+              }
+          }
+
 ## 👒Consumer端整合  
-    引入依赖:
+ ### 引入依赖:
           <dependency>
                     <groupId>org.springframework.kafka</groupId>
                     <artifactId>spring-kafka</artifactId>
           </dependency>
-    配置文件
+ ### 配置文件
           server.port=8002
           ##springBoot整合kafka
           spring.kafka.bootstrap-servers=192.168.182.150:9092
@@ -173,6 +196,21 @@
           spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
           spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer
           spring.kafka.listener.concurrency=5
+  ### ConsuemrService
+          @Component
+          @Slf4j
+          public class KafkaConsumerService {
+              @KafkaListener(groupId = "group02",topics = "topic02")
+              public void onMessage(
+                      ConsumerRecord<String,Object>record,
+                      Acknowledgment acknowledgment,
+                      Consumer<?,?> consumer){
+                  log.info("消费端接收消息:{}",record.value());
+                  //手工签收
+                  acknowledgment.acknowledge();
+              }
+          }
+
 ## 🔬发送消息测试
           @RunWith(SpringRunner.class)
           @SpringBootTest
@@ -188,3 +226,7 @@
           
               }
           }
+## 👌查看消费进度
+          ./kafka-consumer-groups.sh --bootstrap-server 192.168.182.150:9092 --describe --group group02
+
+          
