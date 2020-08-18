@@ -3,6 +3,7 @@
 > #### 🚀添加依赖与配置打包方式
 > #### ⚒创建生产者
 > #### 🌽创建消费者者
+> #### 🎉SpringBoot整合Kafka
 # 🚀添加依赖
     <dependency>
            <groupId>org.apache.kafka</groupId>
@@ -124,3 +125,66 @@
     
         }
     }
+# 🎉SpringBoot整合Kafka
+> ### ⛑Prodcuer端整合
+> ### 👒Consumer端整合  
+> ### 🔬发送消息测试      
+## ⛑Prodcuer端整合
+    引入依赖:
+          <dependency>
+                    <groupId>org.springframework.kafka</groupId>
+                    <artifactId>spring-kafka</artifactId>
+          </dependency>
+    配置文件:
+          server.port=8001
+          
+          ##springBoot整合kafka
+          spring.kafka.bootstrap-servers=192.168.182.150:9092
+          ##kafka producer发送消息失败时的一个重试次数
+          spring.kafka.producer.retries=0
+          ##批量发送数据的配置
+          spring.kafka.producer.batch-size=16384
+          spring.kafka.producer.buffer-memory=33554432
+          ##kafka消息序列化
+          spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+          spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+          ##acks=0 生产者在成功写入消息之前不会等待任何来自服务器的响应
+          ##acks=1 只要集群的首领节点收到消息，生产者就会收到来自服务器的成功响应
+          ##acks=-1 表示分区leader必须等待消息被成功写入所有的ISR副本（同步副本）中才认为producer请求成功，这种方案提供做高消息持久性保证，但是理论上吞吐量是最差的
+          ##实际工作中的配置
+          spring.kafka.producer.acks=1 
+## 👒Consumer端整合  
+    引入依赖:
+          <dependency>
+                    <groupId>org.springframework.kafka</groupId>
+                    <artifactId>spring-kafka</artifactId>
+          </dependency>
+    配置文件
+          server.port=8002
+          ##springBoot整合kafka
+          spring.kafka.bootstrap-servers=192.168.182.150:9092
+          ##consumer消息的签收机制:手工签收
+          spring.kafka.consumer.enable-auto-commit=false
+          spring.kafka.listener.ack-mode=manual
+          ## earliest 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费
+          ## latest 当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，消费新产生的该分区下的数据
+          ## none topic各分区都存在已提交的offset时，从offset后开始消费；只要有一个分区不存在已提交的offset，则抛出异常
+          spring.kafka.consumer.auto-offset-reset=earliest
+          spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+          spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+          spring.kafka.listener.concurrency=5
+## 🔬发送消息测试
+          @RunWith(SpringRunner.class)
+          @SpringBootTest
+          public class Application {
+              @Autowired
+              private KafkaproducerService kafkaproducerService;
+              @Test
+              public void send(){
+                  String topic = "topic02";
+                  for(int i = 0;i<10;i++){
+                      kafkaproducerService.sendMessage(topic,"hello"+i);
+                  }
+          
+              }
+          }
