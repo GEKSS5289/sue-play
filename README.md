@@ -6,3 +6,4 @@
 > ##### 🧢PlayOSS->[`PLAY OSS`](https://github.com/GEKSS5289/sue-play/blob/master/PlayOSS.md)
 > ##### 🏉PlayRabbitMQ->[`PLAY RABBITMQ`](https://github.com/GEKSS5289/sue-play/blob/master/PlayRabbitMQ.md)
 > ##### 🏐PlayKafka->[`PLAY KAFKA`](https://github.com/GEKSS5289/sue-play/blob/master/PlayKafka.md)
+> ##### 🍻PlaySkyWalKing->[`PLAY SKYWALKING`](https://github.com/GEKSS5289/sue-play/blob/master/PlaySkyWalKing.md)
