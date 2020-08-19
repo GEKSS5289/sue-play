@@ -214,7 +214,7 @@
                 return IMOOCJSONResult.ok();
             }
         }
-# 🍢动态配置(Nacos
+# 🍢动态配置(Nacos)
     从Skywalking 6.5.0开始，部分Skywalking配置项支持“动态配置”——这样修改完配置后，就无需重启Skywalking啦。
     
     支持动态配置的配置项如下：
