@@ -1,4 +1,4 @@
-# sue-play
+# 🐬sue-play
 > ##### ⚽PlayNginx->[`PLAY NGINX`](https://github.com/GEKSS5289/sue-play/blob/master/PlayNginx.md)
 > ##### 🏓PlayElasticSearch->[`PLAY ELASTICSEARCH`](https://github.com/GEKSS5289/sue-play/blob/master/PlayElasticSearch.md)
 > ##### 🎯PlayLogstatsh->[`PLAY LOGSTATSH`](https://github.com/GEKSS5289/sue-play/blob/master/PlayLogstatsh.md)
@@ -7,3 +7,4 @@
 > ##### 🏉PlayRabbitMQ->[`PLAY RABBITMQ`](https://github.com/GEKSS5289/sue-play/blob/master/PlayRabbitMQ.md)
 > ##### 🏐PlayKafka->[`PLAY KAFKA`](https://github.com/GEKSS5289/sue-play/blob/master/PlayKafka.md)
 > ##### 🍻PlaySkyWalKing->[`PLAY SKYWALKING`](https://github.com/GEKSS5289/sue-play/blob/master/PlaySkyWalKing.md)
+> ##### 🐬PlayMysql->[`PLAY MYSQL`](https://github.com/GEKSS5289/sue-play/blob/master/PlayMysql.md)
