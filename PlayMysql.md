@@ -30,6 +30,7 @@
         
     mysql从上导入之前dump数据:
         mysql < dbdump.db -uroot -p
+        
     mysql从上配置主从连接信息:
          CHANGE MASTER TO
         	MASTER_HOST='master_host_name', 	
@@ -46,8 +47,10 @@
                 recorded_log_file_name ：bin-log的文件名
                 recorded_log_position : bin-log的位置（数字型）
                 bin-log的文件名和位置 是 步骤5中的show master status 得到的
+                
     mysql从上开启同步:
         mysql> START SLAVE;
+        
     查看slave状态:
         show slave status \G;
             
